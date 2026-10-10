@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, Keerthika</title>
+  <link rel="stylesheet" href="style.css?v=3.0">
+  <!-- GSAP Animation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Background music player (hidden audio element) -->
+    <audio id="bg-music" loop></audio>
+
+    <div class="screens-wrapper">
+
+      <!-- SCREEN 0: Canvas Garden Intro -->
+      <div id="screen-intro-garden" class="screen active" style="padding: 0; overflow: hidden; background: #000;">
+        <canvas id="garden-canvas"></canvas>
+        <div class="garden-overlay-ui">
+          <h1 class="garden-title heading-serif" style="font-size: 2rem;">Keerthika's Garden 🌸</h1>
+          <p class="garden-subtitle">Tap anywhere to plant a flower... it's your day 🎂</p>
+          <div class="garden-counter">💕 <span id="intro-flower-count">0</span> flowers planted</div>
+        </div>
+        <button id="intro-garden-continue" class="action-btn" style="display: none; position: absolute; bottom: 40px; z-index: 10;">
+          Continue ➔
+        </button>
+      </div>
+
+      <!-- SCREEN 0a: Love Quiz Screen -->
+      <div id="screen-love-quiz" class="screen" style="justify-content: center; align-items: center; background-color: var(--bg-color);">
+        <div class="quiz-box">
+          <!-- Cute Peach Cat illustration via SVG -->
+          <svg viewBox="0 0 100 100" style="width: 120px; height: 120px; margin-bottom: 12px;">
+            <!-- Cat head -->
+            <ellipse cx="50" cy="55" rx="30" ry="24" fill="#faf8f0" stroke="#7c6a9f" stroke-width="2.5" />
+            <!-- Ears -->
+            <path d="M26 38c-3-8 3-12 8-6M74 38c3-8-3-12-8-6" fill="#faf8f0" stroke="#7c6a9f" stroke-width="2.5" />
+            <!-- Inner ears -->
+            <path d="M28 36c-1-5 2-8 5-4M72 36c1-5-2-8-5-4" fill="#eac3cd" />
+            <!-- Eyes -->
+            <circle cx="38" cy="52" r="3" fill="#2d2438" />
+            <circle cx="62" cy="52" r="3" fill="#2d2438" />
+            <!-- Blushing cheeks -->
+            <ellipse cx="32" cy="59" rx="4.5" ry="3" fill="#eac3cd" opacity="0.8" />
+            <ellipse cx="68" cy="59" rx="4.5" ry="3" fill="#eac3cd" opacity="0.8" />
+            <!-- Mouth -->
+            <path d="M47 59c1 1 2 2 3 2s2-1 3-2" stroke="#2d2438" stroke-width="1.5" stroke-linecap="round" fill="none" />
+            <!-- Heart balloon string -->
+            <path d="M50 79c0 8-5 12-5 18" stroke="#7c6a9f" stroke-width="1.5" fill="none" />
+            <!-- Heart balloon -->
+            <path d="M50 32c-6-8-14-4-14 4 0 6 10 12 14 16 4-4 14-10 14-16 0-8-8-12-14-4z" fill="#e06d75" stroke="#7c6a9f" stroke-width="1.5" />
+          </svg>
+          <h2 class="heading-serif" style="font-size: 1.8rem; text-align: center; color: var(--text-main); margin-bottom: 2px;">Ready for your birthday surprise? 😏</h2>
+          <p class="sub-script" style="font-size: 1.6rem; text-align: center; color: var(--accent-color); margin-bottom: 24px;">(there's only one right answer)</p>
+          <div class="quiz-buttons">
+            <button id="yes-btn">Yes! ♡</button>
+            <button id="no-btn">No</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 1: Home / Envelope screen -->
+      <div id="screen-home" class="screen">
+        
+        <div class="pill-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="color: var(--accent-color);">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          FOR THE BIRTHDAY GIRL
+        </div>
+
+        <h1 class="heading-serif" style="font-size: 1.8rem; max-width: 90%;">Somebody's birthday is today... 🎂</h1>
+        <p class="sub-script">happy birthday, Keerthika</p>
+
+        <!-- Dancing cat container -->
+        <div class="cat-container">
+          <img src="https://media.tenor.com/2K1zWjVp1w0AAAAC/cat-dance.gif" alt="Cute dancing cat" class="cat-gif">
+        </div>
+
+        <!-- Animated interactive envelope -->
+        <div class="envelope-wrapper" id="envelope-trigger">
+          <div class="envelope-flap"></div>
+          <div class="envelope">
+            <div class="envelope-right"></div>
+            <div class="letter-inside">
+              <p>Click me to</p>
+              <p>Open letter ♡</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="floating-decor" style="top: 15%; left: 10%;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#eedbef"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        </div>
+        <div class="floating-decor" style="top: 25%; right: 12%; animation-delay: 2s;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#eedbef"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        </div>
+        <div class="floating-decor" style="bottom: 30%; left: 8%; animation-delay: 4s;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#eedbef"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        </div>
+        <div class="floating-decor" style="bottom: 25%; right: 10%; animation-delay: 1s;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="#eedbef"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        </div>
+
+      </div>
+
+      <!-- SCREEN 2: Main Card with music player and cute polaroids -->
+      <div id="screen-main-card" class="screen">
+        
+        <div class="main-card">
+          <!-- Decorative flowers in corners -->
+          <div class="corner-flower flower-tl">
+            <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+              <!-- Camellia Flower design -->
+              <circle cx="50" cy="50" r="18" fill="#eac3cd" />
+              <circle cx="34" cy="50" r="16" fill="#f0d5db" opacity="0.9" />
+              <circle cx="66" cy="50" r="16" fill="#f0d5db" opacity="0.9" />
+              <circle cx="50" cy="34" r="16" fill="#f0d5db" opacity="0.9" />
+              <circle cx="50" cy="66" r="16" fill="#f0d5db" opacity="0.9" />
+              <circle cx="50" cy="50" r="10" fill="#e799aa" />
+            </svg>
+          </div>
+          
+          <div class="corner-flower flower-tr">
+            <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+              <!-- Daisy Flower design -->
+              <circle cx="50" cy="50" r="12" fill="#fbd87f" />
+              <circle cx="50" cy="26" r="10" fill="#ffffff" />
+              <circle cx="50" cy="74" r="10" fill="#ffffff" />
+              <circle cx="26" cy="50" r="10" fill="#ffffff" />
+              <circle cx="74" cy="50" r="10" fill="#ffffff" />
+              <circle cx="33" cy="33" r="10" fill="#ffffff" />
+              <circle cx="67" cy="67" r="10" fill="#ffffff" />
+              <circle cx="33" cy="67" r="10" fill="#ffffff" />
+              <circle cx="67" cy="33" r="10" fill="#ffffff" />
+            </svg>
+          </div>
+
+          <!-- Hello kitty avatar -->
+          <div class="avatar-circle">
+            <svg viewBox="0 0 100 100" class="avatar-img">
+              <!-- Hello Kitty head & bow -->
+              <ellipse cx="50" cy="54" rx="34" ry="26" fill="#ffffff" stroke="#2d2438" stroke-width="2.5" />
+              <!-- Ears -->
+              <path d="M22 36c-2-8 4-14 10-8M78 36c2-8-4-14-10-8" fill="#ffffff" stroke="#2d2438" stroke-width="2.5" />
+              <!-- Eyes -->
+              <ellipse cx="38" cy="54" rx="3.5" ry="5.5" fill="#2d2438" />
+              <ellipse cx="62" cy="54" rx="3.5" ry="5.5" fill="#2d2438" />
+              <!-- Nose -->
+              <ellipse cx="50" cy="61" rx="3.5" ry="2.5" fill="#fbd87f" />
+              <!-- Bow -->
+              <circle cx="70" cy="38" r="7.5" fill="#e06d75" stroke="#2d2438" stroke-width="2" />
+              <path d="M70 38l12-8c2 3 1 7-2 8zM70 38l-12 8c-2-3-1-7 2-8z" fill="#e06d75" stroke="#2d2438" stroke-width="2" />
+            </svg>
+          </div>
+
+          <div class="pill-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            FOR THE BIRTHDAY GIRL
+          </div>
+
+          <h2 class="heading-serif" style="font-size: 1.7rem; margin-bottom: 2px;">Happy Birthday</h2>
+          <p class="sub-script" style="font-size: 1.8rem; margin-bottom: 12px;">to someone pretty special ♡</p>
+
+          <p class="card-para">
+            Today is all about you. I built this tiny corner of the internet just to say happy birthday and to make you smile. Stay a while, birthday girl.
+          </p>
+
+          <!-- Music Player -->
+          <div class="music-player" style="display:none;">
+            <div class="music-thumb">
+              <!-- Cuddling cats thumbnail SVG -->
+              <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
+                <rect width="100%" height="100%" fill="#faf8f0"/>
+                <!-- Grey Cat -->
+                <ellipse cx="40" cy="55" rx="18" ry="15" fill="#c3bfcb" />
+                <circle cx="30" cy="40" r="5" fill="#c3bfcb" />
+                <path d="M22 45l4-12 8 8z" fill="#c3bfcb" />
+                <!-- White Cat cuddling -->
+                <ellipse cx="60" cy="58" rx="16" ry="14" fill="#ffffff" stroke="#c3bfcb" stroke-width="1.5" />
+                <circle cx="68" cy="45" r="5" fill="#ffffff" />
+                <path d="M74 48l-4-10-6 7z" fill="#ffffff" stroke="#c3bfcb" stroke-width="1.5" />
+                <!-- Hearts -->
+                <path d="M50 32c-2-2-4 0-4 2 0 2 4 5 4 5s4-3 4-5c0-2-2-2-4 0z" fill="#e06d75" />
+              </svg>
+            </div>
+            <div class="music-details">
+              <span class="music-title">Our Song</span>
+              <span class="music-subtitle">A TRACK THAT'S JUST US</span>
+            </div>
+            <button class="music-play-btn" id="music-btn">
+              <!-- Play icon -->
+              <svg viewBox="0 0 24 24" id="play-svg">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <!-- Pause icon (hidden by default) -->
+              <svg viewBox="0 0 24 24" id="pause-svg" style="display: none;">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+              </svg>
+            </button>
+            <div class="music-timeline">
+              <div class="music-progress" id="music-progress-bar"></div>
+            </div>
+          </div>
+
+          <!-- Polaroid Grid (3 small cards) -->
+          <div class="polaroids-row">
+            <!-- 1. Cats hugging -->
+            <div class="polaroid-card">
+              <div class="polaroid-img-box">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="45" fill="#f0ecf6" />
+                  <!-- Hugging cats graphic -->
+                  <circle cx="43" cy="55" r="16" fill="#c3bfcb" />
+                  <path d="M28 44l6-10 6 7z" fill="#c3bfcb" />
+                  <circle cx="57" cy="55" r="16" fill="#ffffff" />
+                  <path d="M72 44l-6-10-6 7z" fill="#ffffff" />
+                  <circle cx="42" cy="52" r="1" fill="#2d2438" />
+                  <circle cx="58" cy="52" r="1" fill="#2d2438" />
+                  <path d="M50 48c0.5-2-0.5-4 1-5" stroke="#e06d75" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
+            </div>
+            <!-- 2. Cats celebrating -->
+            <div class="polaroid-card">
+              <div class="polaroid-img-box">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="45" fill="#fbf5e6" />
+                  <!-- Celebratory cats graphic -->
+                  <circle cx="50" cy="62" r="18" fill="#ffffff" />
+                  <path d="M38 52l5-12 5 8zM62 52l-5-12-5 8z" fill="#ffffff" />
+                  <!-- Raised hands -->
+                  <path d="M42 50l-8-12M58 50l8-12" stroke="#2d2438" stroke-width="3" stroke-linecap="round" />
+                  <!-- Blushing cheeks -->
+                  <circle cx="43" cy="60" r="3" fill="#eac3cd" />
+                  <circle cx="57" cy="60" r="3" fill="#eac3cd" />
+                  <path d="M48 58s2-2 4 0" stroke="#2d2438" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+              </div>
+            </div>
+            <!-- 3. Basket of roses -->
+            <div class="polaroid-card">
+              <div class="polaroid-img-box">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="45" fill="#faf0f2" />
+                  <!-- Rose Basket graphic -->
+                  <!-- Basket -->
+                  <path d="M30 55h40l-8 25H38z" fill="#cd9d7a" stroke="#2d2438" stroke-width="2" />
+                  <path d="M30 55c0-10 10-18 20-18s20 8 20 18" fill="none" stroke="#cd9d7a" stroke-width="3" />
+                  <!-- Roses inside -->
+                  <circle cx="40" cy="50" r="8" fill="#e06d75" />
+                  <circle cx="50" cy="46" r="9" fill="#eac3cd" />
+                  <circle cx="60" cy="50" r="8" fill="#e06d75" />
+                  <circle cx="45" cy="54" r="6" fill="#eac3cd" />
+                  <circle cx="55" cy="54" r="7" fill="#e06d75" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="go-to-bouquet">
+            A FEW REASONS →
+          </button>
+        </div>
+
+        <div class="watermark">MADE FOR KEERTHIKA</div>
+
+      </div>
+
+      <!-- SCREEN 4: Bouquet Screen -->
+      <div id="screen-bouquet" class="screen">
+        
+        <div class="pill-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          A LITTLE BOUQUET
+        </div>
+
+        <h2 class="heading-serif" style="font-size: 1.8rem; margin-bottom: 2px;">a bloom for every reason you're a joy to know</h2>
+        <p class="sub-script">picked just for you 🌸</p>
+
+        <!-- Bouquet Container Grid -->
+        <div class="bouquet-box">
+          <div class="flower-grid">
+            
+            <!-- Card 1: Pink Peony -->
+            <div class="flower-card">
+              <div class="flower-card-graphic">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="18" fill="#eac3cd" />
+                  <circle cx="34" cy="50" r="16" fill="#f0d5db" opacity="0.9" />
+                  <circle cx="66" cy="50" r="16" fill="#f0d5db" opacity="0.9" />
+                  <circle cx="50" cy="34" r="16" fill="#f0d5db" opacity="0.9" />
+                  <circle cx="50" cy="66" r="16" fill="#f0d5db" opacity="0.9" />
+                  <circle cx="50" cy="50" r="8" fill="#e799aa" />
+                </svg>
+              </div>
+              <div class="flower-card-text">you make me smile ♡</div>
+            </div>
+
+            <!-- Card 2: Cherry Blossom -->
+            <div class="flower-card">
+              <div class="flower-card-graphic">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="10" fill="#f7ced7" />
+                  <!-- 5 Petals -->
+                  <path d="M50 25c5-10 15-5 10 5s-10 5-10-10z" fill="#fcdfe4" />
+                  <path d="M75 50c10 5 5 15-5 10s-5-10 10-10z" fill="#fcdfe4" />
+                  <path d="M50 75c-5 10-15 5-10-5s10-5 10 10z" fill="#fcdfe4" />
+                  <path d="M25 50c-10-5-5-15 5-10s5 10-5 10z" fill="#fcdfe4" />
+                  <path d="M68 32c10-5 12 8 2 10s-12-8-2-10z" fill="#fcdfe4" />
+                  <!-- Center yellow stamen -->
+                  <circle cx="50" cy="50" r="6" fill="#fbd87f" />
+                </svg>
+              </div>
+              <div class="flower-card-text">your laugh is contagious ♡</div>
+            </div>
+
+            <!-- Card 3: Purple Tulip -->
+            <div class="flower-card">
+              <div class="flower-card-graphic">
+                <svg viewBox="0 0 100 100">
+                  <!-- Stem & Leaves -->
+                  <path d="M50 55v30" stroke="#a0c29d" stroke-width="4" stroke-linecap="round" />
+                  <path d="M50 75c-10-5-15-15-15-15s5 10 15 15zM50 78c10-3 15-12 15-12s-5 8-15 12z" fill="#a0c29d" />
+                  <!-- Tulip Head -->
+                  <path d="M35 50c0-20 15-25 15-25s15 5 15 25c0 10-10 15-15 15s-15-5-15-15z" fill="#c4b2e6" />
+                  <path d="M50 60c-8 0-12-10-12-20 0-12 12-20 12-20s12 8 12 20c0 10-4 20-12 20z" fill="#ad98d6" />
+                </svg>
+              </div>
+              <div class="flower-card-text">you brighten up my day ♡</div>
+            </div>
+
+            <!-- Card 4: Forget-Me-Not -->
+            <div class="flower-card">
+              <div class="flower-card-graphic">
+                <svg viewBox="0 0 100 100">
+                  <!-- forget-me-not -->
+                  <circle cx="50" cy="50" r="10" fill="#fcd87e" />
+                  <circle cx="50" cy="28" r="12" fill="#aec2f2" />
+                  <circle cx="50" cy="72" r="12" fill="#aec2f2" />
+                  <circle cx="28" cy="50" r="12" fill="#aec2f2" />
+                  <circle cx="72" cy="50" r="12" fill="#aec2f2" />
+                  <circle cx="34" cy="34" r="12" fill="#9db5eb" />
+                  <circle cx="66" cy="66" r="12" fill="#9db5eb" />
+                  <circle cx="34" cy="67" r="12" fill="#9db5eb" />
+                  <circle cx="66" cy="34" r="12" fill="#9db5eb" />
+                  <circle cx="50" cy="50" r="6" fill="#fcd87e" />
+                </svg>
+              </div>
+              <div class="flower-card-text">you're so easy to talk to ♡</div>
+            </div>
+
+            <!-- Card 5: Orange Flower -->
+            <div class="flower-card">
+              <div class="flower-card-graphic">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="16" fill="#fbc38d" />
+                  <circle cx="36" cy="50" r="14" fill="#ffdcb3" opacity="0.95" />
+                  <circle cx="64" cy="50" r="14" fill="#ffdcb3" opacity="0.95" />
+                  <circle cx="50" cy="36" r="14" fill="#ffdcb3" opacity="0.95" />
+                  <circle cx="50" cy="64" r="14" fill="#ffdcb3" opacity="0.95" />
+                  <circle cx="50" cy="50" r="8" fill="#e29b53" />
+                </svg>
+              </div>
+              <div class="flower-card-text">you make everything more fun ♡</div>
+            </div>
+
+            <!-- Card 6: Daisy -->
+            <div class="flower-card">
+              <div class="flower-card-graphic">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="10" fill="#fbd87f" />
+                  <circle cx="50" cy="24" r="9" fill="#ffffff" stroke="#e9e5ee" stroke-width="1" />
+                  <circle cx="50" cy="76" r="9" fill="#ffffff" stroke="#e9e5ee" stroke-width="1" />
+                  <circle cx="24" cy="50" r="9" fill="#ffffff" stroke="#e9e5ee" stroke-width="1" />
+                  <circle cx="76" cy="50" r="9" fill="#ffffff" stroke="#e9e5ee" stroke-width="1" />
+                  <circle cx="32" cy="32" r="9" fill="#ffffff" stroke="#e9e5ee" stroke-width="1" />
+                  <circle cx="68" cy="68" r="9" fill="#ffffff" stroke="#e9e5ee" stroke-width="1" />
+                  <circle cx="32" cy="68" r="9" fill="#ffffff" stroke="#e9e5ee" stroke-width="1" />
+                  <circle cx="68" cy="32" r="9" fill="#ffffff" stroke="#e9e5ee" stroke-width="1" />
+                  <circle cx="50" cy="50" r="5" fill="#fbd87f" />
+                </svg>
+              </div>
+              <div class="flower-card-text">I'm really glad we met ♡</div>
+            </div>
+
+          </div>
+          <!-- Scalloped divider -->
+          <div class="scalloped-divider"></div>
+        </div>
+
+        <button class="btn-primary" id="go-to-letter">
+          READ MY NOTE →
+        </button>
+
+        <div class="watermark">MADE FOR KEERTHIKA</div>
+
+      </div>
+
+      <!-- SCREEN 5: Letter Paper Screen -->
+      <div id="screen-letter" class="screen">
+        
+        <div class="letter-paper">
+          <!-- Hugging sketch avatar -->
+          <div class="letter-avatar">
+            <svg viewBox="0 0 100 100">
+              <rect width="100%" height="100%" fill="none"/>
+              <!-- Lavender outline sketch of two characters hugging -->
+              <path d="M35 70c0-10 5-15 15-15s15 5 15 15M30 65c-2-8 3-15 10-15s10 7 10 15" stroke="#7c6a9f" stroke-width="2.5" fill="none" stroke-linecap="round" />
+              <!-- Heads hugging -->
+              <circle cx="42" cy="40" r="12" fill="#faf8f0" stroke="#7c6a9f" stroke-width="2.5" />
+              <circle cx="58" cy="42" r="11" fill="#faf8f0" stroke="#7c6a9f" stroke-width="2.5" />
+              <!-- Hair details / Cute sketch arms -->
+              <path d="M46 52c3-4 8-4 11 0" stroke="#7c6a9f" stroke-width="2.5" fill="none" stroke-linecap="round" />
+              <!-- Floating tiny heart -->
+              <path d="M50 24c-1-1-2 0-2 1s2 3 2 3 2-2 2-3-1-1-2 0z" fill="#e06d75" />
+            </svg>
+          </div>
+
+          <div class="letter-heading-container">
+            <div class="pill-badge" style="background-color: var(--primary-light);">
+              ♡ A NOTE JUST FOR YOU ♡
+            </div>
+            <h3>Dear Keerthika,</h3>
+          </div>
+
+          <!-- Divider line -->
+          <div class="letter-divider">
+            <div class="divider-line"></div>
+            <div class="divider-flower">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                <path d="M12 2a1 1 0 0 1 1 1v3.07a8 8 0 0 1 6.93 6.93H21a1 1 0 1 1 0 2h-3.07a8 8 0 0 1-6.93 6.93V21a1 1 0 1 1-2 0v-3.07A8 8 0 0 1 3 13H2a1 1 0 1 1 0-2h3.07A8 8 0 0 1 11 6.07V3a1 1 0 0 1 1-1z"/>
+              </svg>
+            </div>
+            <div class="divider-line"></div>
+          </div>
+
+          <p class="letter-paragraph">
+            I wanted to make you something a little different for your birthday. Some flowers, some cute drawings, and a few honest words.
+          </p>
+
+          <!-- Polaroid grid row inside letter -->
+          <div class="polaroids-row" style="margin-bottom: 24px;">
+            <!-- 1. Flower basket -->
+            <div class="polaroid-card">
+              <div class="polaroid-img-box">
+                <svg viewBox="0 0 100 100">
+                  <path d="M30 55h40l-8 25H38z" fill="#cd9d7a" stroke="#7c6a9f" stroke-width="1.5" />
+                  <path d="M30 55c0-10 10-18 20-18s20 8 20 18" fill="none" stroke="#7c6a9f" stroke-width="2" />
+                  <circle cx="40" cy="50" r="7" fill="#e06d75" />
+                  <circle cx="50" cy="46" r="8" fill="#eac3cd" />
+                  <circle cx="60" cy="50" r="7" fill="#e06d75" />
+                </svg>
+              </div>
+            </div>
+            <!-- 2. I love you the mostest card -->
+            <div class="polaroid-card">
+              <div class="polaroid-img-box" style="flex-direction: column; padding: 4px; background-color: #ffffff;">
+                <svg viewBox="0 0 100 100" style="flex: 1;">
+                  <!-- Red flowers sketch -->
+                  <path d="M50 80v-40" stroke="#7c6a9f" stroke-width="2" />
+                  <circle cx="50" cy="38" r="8" fill="#e06d75" />
+                  <circle cx="40" cy="44" r="6" fill="#eac3cd" />
+                  <circle cx="60" cy="44" r="6" fill="#eac3cd" />
+                </svg>
+                <div style="font-size: 0.45rem; font-weight: 700; color: var(--primary-color); text-align: center; line-height: 1.1;">
+                  MAKE A<br>WISH
+                </div>
+              </div>
+            </div>
+            <!-- 3. Frog sketch -->
+            <div class="polaroid-card">
+              <div class="polaroid-img-box" style="flex-direction: column; padding: 4px; background-color: #ffffff;">
+                <svg viewBox="0 0 100 100" style="flex: 1;">
+                  <!-- Frog holding sign -->
+                  <ellipse cx="50" cy="60" rx="20" ry="14" fill="#a0c29d" stroke="#7c6a9f" stroke-width="1.5" />
+                  <ellipse cx="40" cy="44" rx="6" ry="7" fill="#a0c29d" stroke="#7c6a9f" stroke-width="1.5" />
+                  <ellipse cx="60" cy="44" rx="6" ry="7" fill="#a0c29d" stroke="#7c6a9f" stroke-width="1.5" />
+                  <circle cx="40" cy="44" r="2" fill="#2d2438" />
+                  <circle cx="60" cy="44" r="2" fill="#2d2438" />
+                  <path d="M44 60s6 4 12 0" stroke="#2d2438" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+                <div style="font-size: 0.55rem; font-weight: 800; color: var(--primary-color); text-align: center;">
+                  HBD!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="letter-paragraph">
+            thank you for the conversations and for how easily you make me smile. Getting to know you has been one of the best parts of my days lately.
+          </p>
+
+          <p class="letter-paragraph">
+            I hope this year brings you everything you're working toward, and a lot of reasons to celebrate along the way.
+          </p>
+
+          <p class="letter-paragraph">
+            I hope today feels soft and warm and completely yours. I'd really like to see where this goes. Happy birthday, Keerthika.
+          </p>
+
+          <!-- Divider line -->
+          <div class="letter-divider">
+            <div class="divider-line"></div>
+            <div class="divider-flower">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                <path d="M12 2a1 1 0 0 1 1 1v3.07a8 8 0 0 1 6.93 6.93H21a1 1 0 1 1 0 2h-3.07a8 8 0 0 1-6.93 6.93V21a1 1 0 1 1-2 0v-3.07A8 8 0 0 1 3 13H2a1 1 0 1 1 0-2h3.07A8 8 0 0 1 11 6.07V3a1 1 0 0 1 1-1z"/>
+              </svg>
+            </div>
+            <div class="divider-line"></div>
+          </div>
+
+          <div class="letter-signature">
+            <span class="letter-signature-intro">with a smile,</span>
+            <span class="heart-sign" id="final-heart">❤️</span>
+          </div>
+
+          <!-- Final Dating Proposal Section -->
+          <div class="dating-proposal" id="dating-proposal-box">
+            <div class="dating-divider"></div>
+            <h3 class="heading-serif" style="font-size: 1.5rem; margin-top: 10px; text-align: center;">
+              can I take you out to celebrate? ☕👉👈
+            </h3>
+            <p class="sub-script" style="text-align: center; margin-bottom: 20px;">choose wisely...</p>
+            <div class="quiz-buttons" id="dating-buttons" style="position: relative; width: 100%; display: flex; justify-content: center; gap: 16px;">
+              <button id="dating-yes-btn">Yes! ♡</button>
+              <button id="dating-no-btn">No</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="watermark">MADE FOR KEERTHIKA</div>
+
+      </div>
+
+      <!-- SCREEN 6: Dating Confirmed -->
+      <div id="screen-confirmed" class="screen" style="justify-content: center; align-items: center; background-color: var(--bg-color);">
+        <div class="quiz-box" style="text-align: center;">
+          <!-- Falling hearts graphic / Cute cat holding heart -->
+          <svg viewBox="0 0 100 100" style="width: 120px; height: 120px; margin: 0 auto 16px auto; display: block;">
+            <!-- Heart cat -->
+            <ellipse cx="50" cy="55" rx="30" ry="24" fill="#faf8f0" stroke="#7c6a9f" stroke-width="2.5" />
+            <path d="M26 38c-3-8 3-12 8-6M74 38c3-8-3-12-8-6" fill="#faf8f0" stroke="#7c6a9f" stroke-width="2.5" />
+            <path d="M28 36c-1-5 2-8 5-4M72 36c1-5-2-8-5-4" fill="#eac3cd" />
+            <circle cx="38" cy="52" r="3" fill="#2d2438" />
+            <circle cx="62" cy="52" r="3" fill="#2d2438" />
+            <!-- Pink heart blush cheeks -->
+            <ellipse cx="32" cy="59" rx="4.5" ry="3" fill="#eac3cd" opacity="0.9" />
+            <ellipse cx="68" cy="59" rx="4.5" ry="3" fill="#eac3cd" opacity="0.9" />
+            <!-- Smiling mouth -->
+            <path d="M47 58c1 2 5 2 6 0" stroke="#2d2438" stroke-width="1.5" stroke-linecap="round" fill="none" />
+            <!-- Cats hugging a giant red heart -->
+            <path d="M50 38c-8-10-18-6-18 4 0 8 14 16 18 20 4-4 18-12 18-20 0-10-10-14-18-4z" fill="#e06d75" stroke="#7c6a9f" stroke-width="1.5" />
+          </svg>
+          <h2 class="heading-serif" style="font-size: 1.8rem; color: var(--accent-color); margin-bottom: 8px;">It's a date! 🎉☕</h2>
+          <p class="sub-script" style="font-size: 1.2rem; color: var(--text-main); margin-bottom: 24px; line-height: 1.4; padding: 0 12px;">
+            Screenshot this and send it to Shaurya. He is probably going to smile like crazy.
+          </p>
+          <div class="watermark">HAPPY BIRTHDAY, KEERTHIKA</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="main.js?v=3.0"></script>
+</body>
+</html>
